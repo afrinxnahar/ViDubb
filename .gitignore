@@ -1,0 +1,11 @@
+videos/  
+*.mp4
+audio/
+audio_chunks/ 
+results/  
+speakers_audio/  
+speakers_image/  
+su_audio_chunks/  
+__pycache__/  
+*.pth
+.env

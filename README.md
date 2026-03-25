@@ -1,26 +1,20 @@
-<div align="center">
+---
+title: CreatorAI Dubbing
+emoji: 🚀
+colorFrom: indigo
+colorTo: purple
+sdk: gradio
+sdk_version: "4.44.0"
+app_file: app.py
+pinned: false
+---
 
+|                                                                Kaggle                                                                |                                               Gradio                                                |                                                                           Youtube                                                                           |
+| :----------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------------------------: |
+| [![Kaggle](https://kaggle.com/static/images/open-in-kaggle.svg)](https://www.kaggle.com/code/medahmedkrichen/vidubb-kaggle-notebook) | [![Gradio](https://img.shields.io/badge/gradio-web_app-blue)](https://github.com/gradio-app/gradio) | [![Youtube](https://img.shields.io/badge/YouTube-%23FF0000.svg?style=for-the-badge&logo=YouTube&logoColor=white)](https://www.youtube.com/@medahmedkrichen) |
+|                                                      Free memory and GPU time!                                                       |                                           Gradio Web App                                            |                                                                         Subscribe!                                                                          |
 
-
-
-<p align="center"><img src="images/Vidubb_img.png" width="1200" height="290" alt="Video dubbing">
-   
-# ViDubb: Free AI Dubbing/Translation with Voice and Emotion Cloning, Multilingual Support, and Lip-Sync
-    
 </div>
-<div align="center">
-    
-|Kaggle|Gradio|Youtube|
-|:-------:|:-------:|:-------:|
-|[![Kaggle](https://kaggle.com/static/images/open-in-kaggle.svg)](https://www.kaggle.com/code/medahmedkrichen/vidubb-kaggle-notebook)|[![Gradio](https://img.shields.io/badge/gradio-web_app-blue)](https://github.com/gradio-app/gradio)|[![Youtube](https://img.shields.io/badge/YouTube-%23FF0000.svg?style=for-the-badge&logo=YouTube&logoColor=white)](https://www.youtube.com/@medahmedkrichen)|
-|Free memory and GPU time!|Gradio Web App|Subscribe!|
-  
-</div>
-
- 
-
-
-
 
 ## Video Dubbing with AI Cloning, Multilingual Capabilities, and Lip-Sync
 
@@ -28,30 +22,25 @@ ViDubb is an advanced AI-powered video dubbing solution focused on delivering hi
 
 ---
 
-
-## Examples 
+## Examples
 
 ### With or Without Background Examples
 
-| Original Video in French | ViDubb With Background in English | ViDubb Without Background in English |
-| ------------------------------------------------------------ | ------------------------------------------------------------ |------------------------------------------------------ |
-| <video src="https://github.com/user-attachments/assets/9b0a5f20-3be7-454c-a800-a561040592ac"> | <video src="https://github.com/user-attachments/assets/64074f56-61e3-497a-8cc2-c400190b9029"> |<video src="https://github.com/user-attachments/assets/8339550b-d60b-43b2-852f-d89d08e814d3"> |
-
-
+| Original Video in French                                                                      | ViDubb With Background in English                                                             | ViDubb Without Background in English                                                          |
+| --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| <video src="https://github.com/user-attachments/assets/9b0a5f20-3be7-454c-a800-a561040592ac"> | <video src="https://github.com/user-attachments/assets/64074f56-61e3-497a-8cc2-c400190b9029"> | <video src="https://github.com/user-attachments/assets/8339550b-d60b-43b2-852f-d89d08e814d3"> |
 
 ### LipSync Example
 
-| Original Video in English                                    | ViDubb with LipSync in French                                   |
-| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| Original Video in English                                                                     | ViDubb with LipSync in French                                                                 |
+| --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
 | <video src="https://github.com/user-attachments/assets/78be408d-255d-4ceb-a2fd-099f75134263"> | <video src="https://github.com/user-attachments/assets/8ad5945e-4d99-4a5a-967c-b2521b2cfa64"> |
-
 
 > [!NOTE]
 >
 > Due to GitHub restrictions, we had to clip and downgrade the linked examples.
 >
 > To view the original videos, please visit our [YouTube channel](https://www.youtube.com/@medahmedkrichen). Don't forget to subscribe!
-
 
 ---
 
@@ -85,9 +74,7 @@ ViDubb is an advanced AI-powered video dubbing solution focused on delivering hi
 5. [Acknowledgment](#acknowledgment)
 6. [License](#license)
 
-
 </details>
-
 
 ## Introduction
 
@@ -110,7 +97,6 @@ Leveraging state-of-the-art AI, **ViDubb** sets new standards in dubbing accurac
 
 Our mission is to provide an efficient and high-quality AI-driven dubbing solution that empowers content creators to expand their global reach, bringing videos to audiences in multiple languages with perfect synchronization and immersive quality.
 
-
 ---
 
 ## TO DO LIST
@@ -121,7 +107,6 @@ Our mission is to provide an efficient and high-quality AI-driven dubbing soluti
 - [ ] Deploy ViDubb on HuggingFace space
 - [ ] Deploy ViDubb on Docker hub
 - [ ] ADD subtitles feature
-      
 
 ---
 
@@ -130,105 +115,115 @@ Our mission is to provide an efficient and high-quality AI-driven dubbing soluti
 ViDubb is an AI-powered video dubbing project that involves voice cloning, multilingual capabilities, lip-syncing, and background sound preservation. Follow the steps below to set up and run ViDubb.
 
 ### 0) Install Anaconda
+
 Before starting, ensure you have [Anaconda](https://docs.anaconda.com/anaconda/install/) installed on your system. Anaconda is used to manage Python environments and dependencies.
 
 ### 1) Set Up the Conda Environment
+
 1. **Remove any existing environment** (if necessary):
-    ```bash
-    conda remove -n vidubbtest --all
-    ```
+
+   ```bash
+   conda remove -n vidubbtest --all
+   ```
 
 2. **Create a new conda environment** with Python 3.10.14 and IPython:
-    ```bash
-    conda create -n "vidubbtest" python=3.10.14 ipython
-    ```
+
+   ```bash
+   conda create -n "vidubbtest" python=3.10.14 ipython
+   ```
 
 3. **Activate the environment**:
-    ```bash
-    conda activate vidubbtest
-    ```
+   ```bash
+   conda activate vidubbtest
+   ```
 
 ### 2) Clone the Repository
+
 1. **Clone the ViDubb repository** from GitHub:
-    ```bash
-    git clone https://github.com/medahmedkrichen/ViDubb.git
-    ```
+
+   ```bash
+   git clone https://github.com/medahmedkrichen/ViDubb.git
+   ```
 
 2. **Navigate to the ViDubb directory**:
-    ```bash
-    cd ViDubb
-    ```
+   ```bash
+   cd ViDubb
+   ```
 
 ### 3) Configure the `.env` File
-1. **Set up the `.env` file** with your Hugging Face API and Groq API tokens:
-    - Create a `.env` file in the `ViDubb` directory.
-    - Add the following lines:
-    ```bash
+
+1. **Set up the `.env` file** with your Hugging Face API and Groq API tokens: - Create a `.env` file in the `ViDubb` directory. - Add the following lines:
+   `bash
     HF_TOKEN="your_huggingface_token"
     Groq_TOKEN="your_groq_token"
-    ```
-> [!NOTE]
->
-> You can obtain your `HF_TOKEN` from [Hugging Face](https://huggingface.co/settings/tokens) to use the **speaker separation**, make sure to request access to [pyannote/speaker-diarization-3.1](https://huggingface.co/pyannote/speaker-diarization-3.1).
-> 
-> You can obtain your `Groq_TOKEN` from [GroqCloud](https://console.groq.com/keys) to use the free API model 'llama3-70b' for translation instead of the standard model (optional).
-
+    `
+   > [!NOTE]
+   >
+   > You can obtain your `HF_TOKEN` from [Hugging Face](https://huggingface.co/settings/tokens) to use the **speaker separation**, make sure to request access to [pyannote/speaker-diarization-3.1](https://huggingface.co/pyannote/speaker-diarization-3.1).
+   >
+   > You can obtain your `Groq_TOKEN` from [GroqCloud](https://console.groq.com/keys) to use the free API model 'llama3-70b' for translation instead of the standard model (optional).
 
 > [!TIP]
 >
 > "llama3-70b" is effective for translating languages in the Latin language family, but it is not as effective for languages like Arabic or Mandarin. If you choose not to use it, leave the groq field empty.
 
 ### 4) Install Dependencies
+
 1. **Install FFmpeg** (for audio/video processing):
-    ```bash
-    sudo apt-get install ffmpeg
-    ```
+
+   ```bash
+   sudo apt-get install ffmpeg
+   ```
 
 2. **Install Python dependencies** from the `requirements.txt` file:
-    ```bash
-    pip install -r requirements.txt
-    ```
+   ```bash
+   pip install -r requirements.txt
+   ```
 
 ### 5) Configure CUDA for GPU Acceleration
+
 1. **Install PyTorch with CUDA support** for GPU acceleration:
-    ```bash
-    pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
-    ```
+
+   ```bash
+   pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
+   ```
 
 2. **Check if CUDA is available**:
-    Open a Python shell and run the following:
-    ```python
-    import torch
-    print(torch.cuda.is_available())
-    ```
+   Open a Python shell and run the following:
+   ```python
+   import torch
+   print(torch.cuda.is_available())
+   ```
 
 ### 6) Download Wave2Lip Models
+
 1. **Download the Wav2Lip model**:
-    ```bash
-    wget 'https://github.com/medahmedkrichen/ViDubb/releases/download/weights2/wav2lip_gan.1.1.pth' -O 'Wav2Lip/wav2lip_gan.pth'
-    ```
+
+   ```bash
+   wget 'https://github.com/medahmedkrichen/ViDubb/releases/download/weights2/wav2lip_gan.1.1.pth' -O 'Wav2Lip/wav2lip_gan.pth'
+   ```
 
 2. **Download the face detection model**:
-    ```bash
-    wget "https://github.com/medahmedkrichen/ViDubb/releases/download/weights1/s3fd-619a316812.1.1.pth" -O "Wav2Lip/face_detection/detection/sfd/s3fd.pth"
-    ```
+   ```bash
+   wget "https://github.com/medahmedkrichen/ViDubb/releases/download/weights1/s3fd-619a316812.1.1.pth" -O "Wav2Lip/face_detection/detection/sfd/s3fd.pth"
+   ```
 
 ### 7) Run the Project
 
 1. **Run the inference script** to process a video:
-   
-    ```bash
-    python inference.py --yt_url "https://www.youtube.com/shorts/ULptP9egQ6Q" --source_language "en" --target_language "fr" --LipSync True --Bg_sound True
-    ```
-    
-    This command will:
-    - --yt_url: Download the video from YouTube you can change it to "--video_url" if you want to work with local file.
-    - --LipSync True: Perform lip-sync translation
-    - --source_language "en" from English
-    - --target_language "fr" to French.
-    - --Bg_sound True preserve the bacground sounds in wanted
-    - Output a dubbed video with lip-syncing in results.
-  
+
+   ```bash
+   python inference.py --yt_url "https://www.youtube.com/shorts/ULptP9egQ6Q" --source_language "en" --target_language "fr" --LipSync True --Bg_sound True
+   ```
+
+   This command will:
+   - --yt_url: Download the video from YouTube you can change it to "--video_url" if you want to work with local file.
+   - --LipSync True: Perform lip-sync translation
+   - --source_language "en" from English
+   - --target_language "fr" to French.
+   - --Bg_sound True preserve the bacground sounds in wanted
+   - Output a dubbed video with lip-syncing in results.
+
 More options:
 
 ```bash
@@ -255,24 +250,25 @@ options:
   --Bg_sound BG_SOUND   Keep the background sound of the original video,
                         though it might be slightly noisy
 ```
+
 <p align="center"><img src="images/inference.png" width="800" height="400" alt="Video dubbing">
 
 > [!TIP]
->  --Bg_sound True: can lead to more noise in some videos with less background sound in origin video
-> 
->  --LipSync True: will take more time and more memory
-
+> --Bg_sound True: can lead to more noise in some videos with less background sound in origin video
+>
+> --LipSync True: will take more time and more memory
 
 ### 8) Launch the Gradio Web App
+
 1. **Start the web application**:
-    ```bash
-    python app.py
-    ```
+
+   ```bash
+   python app.py
+   ```
 
 2. **Access the app** by opening a browser and going to:
-    ```
-    http://localhost:7860/
-    ```
+`     http://localhost:7860/
+    `
 <p align="center"><img src="images/gradio app.jpeg" width="900" height="650" alt="Video dubbing">
 
 By following these steps, you should be able to set up and run ViDubb for video dubbing with AI-powered voice and lip synchronization.
@@ -281,46 +277,56 @@ By following these steps, you should be able to set up and run ViDubb for video 
 
 ## Detailed Features and Technical Details
 
-
 The provided code implements a robust video dubbing pipeline, leveraging various machine learning and audio/video processing techniques. Here's a detailed breakdown of the key features and their underlying technical implementations:
 
 **- Speaker Diarization**
-* **Technical Implementation:** Employs the `pyannote.audio` library, a state-of-the-art speaker diarization toolkit. It segments the audio into speaker turns, allowing for accurate identification of who is speaking at any given time.
+
+- **Technical Implementation:** Employs the `pyannote.audio` library, a state-of-the-art speaker diarization toolkit. It segments the audio into speaker turns, allowing for accurate identification of who is speaking at any given time.
 
 **- Lip-Sync (Optional)**
-* **Technical Implementation:**
+
+- **Technical Implementation:**
   - **Frame Extraction:** Uses OpenCV to extract frames from the video based on the speaker diarization results.
   - **Face Detection:** Leverages the Haar Cascade classifier or a more advanced deep learning-based face detector to locate faces within each frame.
   - **Face Alignment and Normalization:** Prepares the detected faces for further processing by aligning them to a standard template.
   - **Lip-Sync Model:** Employs a pre-trained lip-sync model, such as Wav2Lip, to generate realistic lip movements based on the input audio and extracted facial features.
 
 **- Text Transcription**
-* **Technical Implementation:** Leverages the Whisper model, a robust speech-to-text model, to transcribe the audio content of the video into text. This provides a textual representation of the audio, which is crucial for subsequent text-based processing.
+
+- **Technical Implementation:** Leverages the Whisper model, a robust speech-to-text model, to transcribe the audio content of the video into text. This provides a textual representation of the audio, which is crucial for subsequent text-based processing.
 
 **- Sentence Segmentation**
-* **Technical Implementation:** Utilizes the NLTK library's sentence tokenization capabilities to divide the transcribed text into meaningful sentences. This segmentation is essential for accurate translation and emotion analysis.
+
+- **Technical Implementation:** Utilizes the NLTK library's sentence tokenization capabilities to divide the transcribed text into meaningful sentences. This segmentation is essential for accurate translation and emotion analysis.
 
 **- Text Translation**
-* **Technical Implementation:**
+
+- **Technical Implementation:**
   - **Direct Translation:** Leverages the MarianMT model, a powerful machine translation system, to translate the segmented sentences from the source language to the target language.
   - **Context-Aware Translation (Optional):** Employs a large language model (LLM) like "llama3-70b-8192" to provide context-aware translations, improving the quality and accuracy of the translations.
 
 **- Emotion Analysis (Optional)**
-* **Technical Implementation:** Leverages a pre-trained emotion recognition model, such as the one provided by SpeechBrain, to analyze the emotions expressed in the audio segments. The model classifies emotions into categories like anger, happiness, sadness, and neutral.
+
+- **Technical Implementation:** Leverages a pre-trained emotion recognition model, such as the one provided by SpeechBrain, to analyze the emotions expressed in the audio segments. The model classifies emotions into categories like anger, happiness, sadness, and neutral.
 
 **- Audio Synthesis**
-* **Technical Implementation:** Employs a text-to-speech (TTS) system, such as the one provided by the TTS library, to synthesize audio from the translated text. The TTS system can be further customized to match the speaker's voice and emotion.
+
+- **Technical Implementation:** Employs a text-to-speech (TTS) system, such as the one provided by the TTS library, to synthesize audio from the translated text. The TTS system can be further customized to match the speaker's voice and emotion.
 
 **- Audio and Video Synchronization**
-* **Technical Implementation:** Leverages FFmpeg to synchronize the generated audio with the original video, ensuring that the lip movements align with the spoken words.
+
+- **Technical Implementation:** Leverages FFmpeg to synchronize the generated audio with the original video, ensuring that the lip movements align with the spoken words.
 
 **- Audio and Video Mixing**
-* **Technical Implementation:** Employs libraries like PyDub to mix the original video with the newly generated audio, creating the final dubbed video.
+
+- **Technical Implementation:** Employs libraries like PyDub to mix the original video with the newly generated audio, creating the final dubbed video.
 
 By combining these techniques and leveraging the power of machine learning, the code effectively addresses the challenges of video dubbing, delivering high-quality results.
 
 ---
+
 ## Acknowledgment
+
 - [Linly Dubbing](https://github.com/Kedreamix/Linly-Dubbing/tree/main)
 - [Wav2Lip](https://github.com/zabique/Wav2Lip)
 - [freeCodeCamp](https://github.com/freeCodeCamp/freeCodeCamp)
@@ -328,7 +334,7 @@ By combining these techniques and leveraging the power of machine learning, the 
 - [Kaggle free Notebook](https://www.kaggle.com/)
 - [Colab free Notebook](https://colab.research.google.com/)
 - All open source models :)
-  
+
 ---
 
 ## License
@@ -367,13 +373,10 @@ By combining these techniques and leveraging the power of machine learning, the 
     <meta name="description" content="video dubbing">
     <meta name="description" content="video dubbing">
     <meta name="description" content="video dubbing">
-    
 
-    
+
 </head>
 <body>
     <!-- Content related to AI video dubbing -->
 </body>
 </html>
-
-

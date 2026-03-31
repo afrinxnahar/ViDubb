@@ -1,6 +1,6 @@
-torch==2.2.2
-torchvision==0.17.2
-torchaudio==2.2.2
+torch==2.11.0
+torchvision==0.26.0
+torchaudio==2.11.0
 
 pyannote.audio==3.3.2
 python-dotenv==1.0.1

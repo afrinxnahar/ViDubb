@@ -56,7 +56,7 @@ from tools.utils import get_overlap
 from faster_whisper import WhisperModel
 
         
-nltk.download('punkt')
+nltk.download('punkt_tab')
 warnings.filterwarnings("ignore")
 load_dotenv()
 
@@ -83,7 +83,8 @@ class VideoDubbing:
         os.system("rm -r results")
         os.system("mkdir results")
         
-        device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+        use_cuda = torch.cuda.is_available()
+        device = torch.device('cuda' if use_cuda else 'cpu')
         
         # Initialize the pre-trained speaker diarization pipeline
         pipeline = Pipeline.from_pretrained("pyannote/speaker-diarization",
@@ -231,7 +232,7 @@ class VideoDubbing:
         
         most_occured_speaker= max(list(speakers_rolls.values()),key=list(speakers_rolls.values()).count)
         
-        model = WhisperModel(self.whisper_model, device='cuda')
+        model = WhisperModel(self.whisper_model, device='cuda' if use_cuda else 'cpu')
         segments, info = model.transcribe(self.Video_path, word_timestamps=True)
         segments = list(segments) 
 			 
@@ -461,10 +462,7 @@ class VideoDubbing:
         
         
         os.environ["COQUI_TOS_AGREED"] = "1"
-        if device == "cuda":
-                tts = TTS("tts_models/multilingual/multi-dataset/xtts_v2", gpu=True)
-        else:
-                tts = TTS("tts_models/multilingual/multi-dataset/xtts_v2", gpu=False)
+        tts = TTS("tts_models/multilingual/multi-dataset/xtts_v2", gpu=use_cuda)
         #!tts --model_name "tts_models/multilingual/multi-dataset/xtts_v2"  --list_speaker_idxs
         
         os.system("rm -r audio_chunks")
@@ -643,8 +641,8 @@ class VideoDubbing:
             destination_folder = 'results'
 
             shutil.move(source_path, destination_folder)
-            os.remove('output_video.mp4')
-            os.remove('denoised_video.mp4')
+            if os.path.exists('output_video.mp4'):
+                os.remove('output_video.mp4')
 		
         elif not self.LipSync and self.Voice_denoising:
             source_path = 'denoised_video.mp4'
@@ -678,16 +676,25 @@ language_mapping = {
 }
 
 
-def process_video(video, source_language, target_language, use_wav2lip, whisper_model, bg_sound):
+def _resolve_input_video_path(uploaded_video, youtube_url):
+    if youtube_url and "youtube.com" in youtube_url:
+        os.system(f"yt-dlp -f best -o 'video_path.mp4' --recode-video mp4 {youtube_url}")
+        return "video_path.mp4"
+    if isinstance(uploaded_video, str) and uploaded_video.strip():
+        return uploaded_video
+    if isinstance(uploaded_video, dict):
+        path = uploaded_video.get("path")
+        if path:
+            return path
+    return None
+
+
+def process_video(uploaded_video, youtube_url, source_language, target_language, use_wav2lip, whisper_model, bg_sound):
     try:
         os.system("rm video_path.mp4")
-        video_path = None
-        if "youtube.com" in video:
-            os.system(f"yt-dlp -f best -o 'video_path.mp4' --recode-video mp4 {video}")
-            video_path = "video_path.mp4"
-
-        else:
-            video_path = video
+        video_path = _resolve_input_video_path(uploaded_video, youtube_url)
+        if not video_path:
+            return None, "Error: Provide either a video file or YouTube URL."
         
         vidubb = VideoDubbing(video_path, language_mapping[source_language], language_mapping[target_language], use_wav2lip, not bg_sound, whisper_model, "", os.getenv('HF_TOKEN'))
         if  use_wav2lip and not bg_sound:
@@ -718,7 +725,7 @@ with gr.Blocks(theme=gr.themes.Soft()) as demo:
     with gr.Row():
         with gr.Column(scale=2):
                 video = gr.Video(label="Upload Video (Optional)",height=500, width=500)
-                video = gr.Textbox(label="YouTube URL (Optional)", placeholder="Enter YouTube URL")
+                youtube_url = gr.Textbox(label="YouTube URL (Optional)", placeholder="Enter YouTube URL")
                 source_language = gr.Dropdown(
                     choices=list(language_mapping.keys()),  # You can use `language_mapping.keys()` here
                     label="Source Language for Dubbing",
@@ -753,7 +760,7 @@ with gr.Blocks(theme=gr.themes.Soft()) as demo:
 
     submit_button.click(
         process_video, 
-        inputs=[video, source_language, target_language, use_wav2lip, whisper_model, bg_sound], 
+        inputs=[video, youtube_url, source_language, target_language, use_wav2lip, whisper_model, bg_sound], 
         outputs=[output_video, error_message]
     )
 

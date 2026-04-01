@@ -57,7 +57,7 @@ from tools.utils import get_overlap
 from faster_whisper import WhisperModel
 
         
-nltk.download('punkt')
+nltk.download('punkt_tab')
 warnings.filterwarnings("ignore")
 load_dotenv()
 
@@ -100,7 +100,8 @@ class VideoDubbing:
 
         os.system("rm -r results")
         os.system("mkdir results")
-        device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+        use_cuda = torch.cuda.is_available()
+        device = torch.device('cuda' if use_cuda else 'cpu')
         
         # Initialize the pre-trained speaker diarization pipeline
         pipeline = Pipeline.from_pretrained("pyannote/speaker-diarization",
@@ -248,7 +249,7 @@ class VideoDubbing:
         
         most_occured_speaker= max(list(speakers_rolls.values()),key=list(speakers_rolls.values()).count)
         
-        model = WhisperModel(self.whisper_model, device='cuda')
+        model = WhisperModel(self.whisper_model, device='cuda' if use_cuda else 'cpu')
         segments, info = model.transcribe(self.Video_path, word_timestamps=True)
         segments = list(segments) 
 			 
@@ -477,10 +478,7 @@ class VideoDubbing:
         
         
         os.environ["COQUI_TOS_AGREED"] = "1"
-        if device == "cuda":
-                tts = TTS("tts_models/multilingual/multi-dataset/xtts_v2", gpu=True)
-        else:
-                tts = TTS("tts_models/multilingual/multi-dataset/xtts_v2", gpu=False)
+        tts = TTS("tts_models/multilingual/multi-dataset/xtts_v2", gpu=use_cuda)
         #!tts --model_name "tts_models/multilingual/multi-dataset/xtts_v2"  --list_speaker_idxs
         
         os.system("rm -r audio_chunks")
@@ -655,8 +653,8 @@ class VideoDubbing:
             destination_folder = 'results'
 
             shutil.move(source_path, destination_folder)
-            os.remove('output_video.mp4')
-            os.remove('denoised_video.mp4')
+            if os.path.exists('output_video.mp4'):
+                os.remove('output_video.mp4')
 		
         elif not self.LipSync and self.Voice_denoising:
             source_path = 'denoised_video.mp4'

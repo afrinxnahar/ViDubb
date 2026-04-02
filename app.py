@@ -19,6 +19,23 @@ install_if_not_installed('openai-whisper', 'pip install openai-whisper==20240930
 install_if_not_installed('deepface', 'pip install deepface==0.0.93')
 os.system('pip install numpy==1.26.4 > /dev/null 2>&1')
 
+# pyannote.audio 3.3.x expects torchaudio.AudioMetaData to exist at import time.
+# Some torchaudio builds miss it, causing an AttributeError before we even start.
+try:
+    import torchaudio  # type: ignore
+    if not hasattr(torchaudio, "AudioMetaData"):
+        from typing import NamedTuple
+
+        class AudioMetaData(NamedTuple):
+            sample_rate: int
+            num_frames: int
+            num_channels: int
+            bits_per_sample: int
+
+        torchaudio.AudioMetaData = AudioMetaData  # type: ignore[attr-defined]
+except Exception:
+    pass
+
 from pyannote.audio import Pipeline
 from audio_separator.separator import Separator
 import whisper

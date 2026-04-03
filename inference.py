@@ -70,7 +70,6 @@ def main() -> None:
         whisper_model=args.whisper_model,
         context_translation=groq,
         huggingface_auth_token=hf,
-        marian_on_cpu=True,
     )
 
 

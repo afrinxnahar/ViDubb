@@ -38,11 +38,7 @@ def _uploaded_video_path(uploaded: Any) -> str | None:
     if isinstance(uploaded, str) and uploaded.strip():
         return uploaded
     if isinstance(uploaded, dict):
-        return (
-            uploaded.get("path")
-            or uploaded.get("name")
-            or uploaded.get("video")
-        )
+        return uploaded.get("path") or uploaded.get("name")
     path = getattr(uploaded, "path", None)
     if path:
         return str(path)
@@ -79,7 +75,8 @@ def process_video(
             return None, "Error: Provide either a video file or a YouTube URL."
 
         hf = os.getenv("HF_TOKEN")
-        # Match legacy app: Gradio always used MarianMT (7th arg was hard-coded "").
+        groq = os.getenv("GROQ_TOKEN") or os.getenv("Groq_TOKEN") or ""
+
         VideoDubbing(
             video_path,
             LANGUAGE_MAPPING[source_language],
@@ -87,7 +84,7 @@ def process_video(
             lip_sync=use_wav2lip,
             voice_denoising=not bg_sound,
             whisper_model=whisper_model,
-            context_translation="",
+            context_translation=groq,
             huggingface_auth_token=hf,
         )
 
@@ -156,6 +153,5 @@ with gr.Blocks(theme=gr.themes.Soft(), title="ViDubb") as demo:
         outputs=[video_out, status],
     )
 
-if __name__ == "__main__":
-    demo.queue()
-    demo.launch(share=True)
+demo.queue()
+demo.launch(share=True)

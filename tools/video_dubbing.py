@@ -121,7 +121,6 @@ class VideoDubbing:
         whisper_model: str = "medium",
         context_translation: str = "",
         huggingface_auth_token: str | None = None,
-        marian_on_cpu: bool = False,
     ) -> None:
         self.video_path = video_path
         self.source_language = source_language
@@ -131,7 +130,6 @@ class VideoDubbing:
         self.whisper_model = whisper_model
         self.context_translation = context_translation
         self.huggingface_auth_token = huggingface_auth_token
-        self.marian_on_cpu = marian_on_cpu
 
         _reset_workdirs()
 
@@ -214,7 +212,7 @@ class VideoDubbing:
         os.makedirs("speakers_audio", exist_ok=True)
 
         speakers = set(speakers_rolls.values())
-        src_audio = AudioSegment.from_file(audio_file, format="mp4")
+        src_audio = AudioSegment.from_file(audio_file, format="wav")
         for speaker in speakers:
             speaker_audio = AudioSegment.empty()
             for key, value in speakers_rolls.items():
@@ -232,7 +230,7 @@ class VideoDubbing:
         asr = WhisperModel(
             self.whisper_model,
             device="cuda" if use_cuda else "cpu",
-            compute_type="float16" if use_cuda else "default",
+            compute_type="float16" if use_cuda else "int8",
         )
         segments, _info = asr.transcribe(self.video_path, word_timestamps=True)
         segments = list(segments)
@@ -305,9 +303,8 @@ class VideoDubbing:
                     model_name = f"Helsinki-NLP/opus-mt-{self.source_language}-{self.target_language}"
 
                 tokenizer = MarianTokenizer.from_pretrained(model_name)
-                mt_device = torch.device("cpu") if self.marian_on_cpu else device
-                mt_model = MarianMTModel.from_pretrained(model_name).to(mt_device)
-                inputs = tokenizer([sentence], return_tensors="pt", padding=True).to(mt_device)
+                mt_model = MarianMTModel.from_pretrained(model_name).to(device)
+                inputs = tokenizer([sentence], return_tensors="pt", padding=True).to(device)
                 out = mt_model.generate(**inputs)
                 return tokenizer.decode(out[0], skip_special_tokens=True)
         else:
@@ -342,7 +339,7 @@ class VideoDubbing:
                 return sentence
 
         records: list[list[Any]] = []
-        seg_audio = AudioSegment.from_file(audio_file, format="mp4")
+        seg_audio = AudioSegment.from_file(audio_file, format="wav")
         for i in range(len(new_record)):
             final_sentence = new_record[i][0]
             if not self.context_translation:
@@ -418,7 +415,6 @@ class VideoDubbing:
                 file_path=f"audio_chunks/{i}.wav",
                 speaker_wav=f"speakers_audio/{records[i][4]}.wav",
                 language=self.target_language,
-                emotion=records[i][5],
                 speed=2,
             )
 
@@ -432,8 +428,7 @@ class VideoDubbing:
             input_file = f"audio_chunks/{i}.wav"
             output_file = f"su_audio_chunks/{i}.wav"
 
-            # Boundaries match legacy: θ == 0.44 used the final else branch, not the silence-only branch.
-            if theta < 1 and theta > 0.44:
+            if 0.44 < theta < 1:
                 print("############################")
                 theta_prim = (lo + previous_silence_time) / lt if lt else 1.0
                 proc = subprocess.run(
@@ -445,7 +440,7 @@ class VideoDubbing:
                 if proc.returncode != 0:
                     sc = lo + previous_silence_time
                     AudioSegment.silent(duration=sc * 1000).export(output_file, format="wav")
-            elif theta < 0.44:
+            elif theta <= 0.44:
                 AudioSegment.silent(duration=(lo + previous_silence_time) * 1000).export(output_file, format="wav")
             else:
                 silence = AudioSegment.silent(duration=previous_silence_time * 1000)

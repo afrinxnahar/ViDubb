@@ -49,6 +49,7 @@ tensorflow==2.17.1
 protobuf>=4.25.8,<5.0.0
 jieba==0.42.1
 scikit-image==0.23.2
+deepface==0.0.93
 nltk==3.9.1
 faster-whisper==1.1.1
 transformers>=4.48.3,<5

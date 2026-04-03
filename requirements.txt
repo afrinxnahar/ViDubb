@@ -1,8 +1,10 @@
 torch==2.11.0
 torchvision==0.26.0
 torchaudio==2.11.0
+torchcodec>=0.7.0
 
-pyannote.audio==3.3.2
+pyannote.audio==4.0.4
+gradio>=4.44.0
 python-dotenv==1.0.1
 speechbrain==1.0.3
 audio-separator==0.24.1
@@ -20,7 +22,7 @@ gruut_lang_es==2.0.1
 umap-learn==0.5.1
 anyascii==0.3.2
 coqpit==0.0.17
-einops==0.8.0
+einops>=0.8.1
 g2pkk==0.1.2
 inflect==7.4.0
 num2words==0.5.13
@@ -49,5 +51,5 @@ jieba==0.42.1
 scikit-image==0.23.2
 nltk==3.9.1
 faster-whisper==1.1.1
-transformers==4.46.3
+transformers>=4.48.3,<5
 librosa==0.10.2.post1

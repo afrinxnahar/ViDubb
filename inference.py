@@ -8,13 +8,27 @@ import os
 from ascii_magic import AsciiArt
 from dotenv import load_dotenv
 
-from tools.video_dubbing import VideoDubbing
-
-load_dotenv()
-
 _art = AsciiArt.from_image("Vidubb_without_bg.png")
 _art.to_terminal()
-print("Start processing...")
+print("Start Processing...")
+
+
+def _ensure_installed(import_name: str, install_cmd: str) -> None:
+    try:
+        __import__(import_name)
+    except ImportError:
+        os.system(f"{install_cmd} > /dev/null 2>&1")
+
+
+_ensure_installed("spacy", "pip install spacy==3.8.2")
+_ensure_installed("TTS", "pip install --no-deps TTS==0.21.0")
+_ensure_installed("packaging", "pip install packaging==20.9")
+_ensure_installed("deepface", "pip install deepface==0.0.93")
+os.system("pip install numpy==1.26.4 > /dev/null 2>&1")
+
+from tools.video_dubbing import VideoDubbing  # noqa: E402
+
+load_dotenv()
 
 
 def main() -> None:
